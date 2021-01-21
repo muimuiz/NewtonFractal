@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+    x:Class="NewtonFractal.MainPage"
+    Title="Newton Fractal"
+    >
+    <StackLayout>
+        <StackLayout.Margin>
+            <OnPlatform
+                x:TypeArguments="Thickness"
+                iOS="0, 20, 0, 0"
+                Android="0, 0, 0, 0"
+                WinPhone="0, 0, 0, 0"
+                />
+        </StackLayout.Margin>
+        <Label
+            Text="Julia set derived from the Newton method"
+            TextColor="#444444"
+            BackgroundColor="#AA88FF"
+            HorizontalOptions="Fill"
+            HorizontalTextAlignment="Center"
+            FontAttributes="Bold"
+            FontSize="16"
+            Padding="10,5,10,5"
+            />
+        <Slider
+            x:Name="AlphaReSlider"
+            HorizontalOptions="Fill"
+            Margin="20,0"
+            Minimum="-2" Maximum="2"
+            MinimumTrackColor="#4444CC"
+            MaximumTrackColor="#444444"
+            ThumbColor="#2222FF"
+            Value="{Binding AlphaRe, Mode=TwoWay}"
+            />
+        <Grid
+            VerticalOptions="Start"
+            RowSpacing="0"
+            >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Label
+                Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                HorizontalTextAlignment="Center"
+                FontFamily="serif"
+                TextColor="#444444"
+                Text="(z − α) (z − β) (z − γ) = 0"
+                />
+            <Label
+                Grid.Row="1" Grid.Column="0"
+                HorizontalTextAlignment="End"
+                FontFamily="serif"
+                TextColor="#444444"
+                Text="α = "
+                />
+            <Label
+                x:Name="AlphaLabel"
+                Grid.Row="1" Grid.Column="1"
+                HorizontalTextAlignment="Start"
+                FontFamily="serif"
+                TextColor="#222222"
+                Text="{Binding AlphaString}"
+                />
+            <Label
+                Grid.Row="2" Grid.Column="0"
+                HorizontalTextAlignment="End"
+                FontFamily="serif"
+                TextColor="#444444"
+                Text="β = "
+                />
+            <Label
+                x:Name="BetaLabel"
+                Grid.Row="2" Grid.Column="1"
+                HorizontalTextAlignment="Start"
+                FontFamily="serif"
+                TextColor="#222222"
+                Text="{Binding BetaString}"
+                />
+            <Label
+                Grid.Row="3" Grid.Column="0"
+                HorizontalTextAlignment="End"
+                FontFamily="serif"
+                TextColor="#444444"
+                Text="γ = "
+                />
+            <Label
+                x:Name="GammaLabel"
+                Grid.Row="3" Grid.Column="1"
+                HorizontalTextAlignment="Start"
+                FontFamily="serif"
+                TextColor="#222222"
+                Text="{Binding GammaString}"
+                />
+        </Grid>
+        <Grid
+            VerticalOptions="FillAndExpand"
+            >
+            <skia:SKCanvasView
+                x:Name="BitmapCanvasView"
+                PaintSurface="BitmapCanvasView_PaintSurface"
+                >
+                <skia:SKCanvasView.GestureRecognizers>
+                    <!-- not implemented yet -->
+                    <PinchGestureRecognizer PinchUpdated="BitmapCanvasView_PinchUpdated" />
+                </skia:SKCanvasView.GestureRecognizers>
+            </skia:SKCanvasView>
+            <ProgressBar
+                x:Name="ProgressBar"
+                HorizontalOptions="Fill"
+                VerticalOptions="Center"
+                HeightRequest="10"
+                Margin="100,0"
+                BackgroundColor="#444444"
+                ProgressColor="#22FF88"
+                Progress="{Binding Progress}"
+                IsVisible="{Binding ProgressIsVisible}"
+                />
+        </Grid>
+        <Button
+            x:Name="RestoreButton"
+            HorizontalOptions="CenterAndExpand"
+            VerticalOptions="End"
+            Text="Restore"
+            Command="{Binding RestoreCommand}"
+            />
+    </StackLayout>
+
+</ContentPage>
